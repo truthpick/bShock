@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     // Initial values
     private int intensity = 1;
     private int duration = 1;
+    private int mode = 0; // Mode of operation: 0 = shock, 1 = vibrate, 2 = beep
+    private String modeName = "Shock";
 
     APIHandler apiHandler;
 
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Show initial values (always do this from the in-use value!)
         binding.setIntensityButton.setText("Intensity: " + intensity);
+        binding.setModeButton.setText("Mode: " + modeName);
+        binding.durationButton.setText("Duration: 1");
 
         // Create APIHandler object, which stores auth data
         apiHandler = new APIHandler(this);
@@ -69,8 +73,56 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "doSetIntensity: setting intensity to: " + intensity);
     }
 
+    public void setMode(){
+        String modeText = "Mode: ";
+
+        if (mode == 0){
+            mode = 1;
+            modeName = "Vibrate";
+        } else if (mode == 1){
+            mode = 2;
+            modeName = "Beep";
+        } else if (mode == 2){
+            mode = 0;
+            modeName = "Shock";
+        } else {
+            Log.e(TAG, "setMode: non 0/1/2 value for mode");
+        }
+        binding.setModeButton.setText(modeText + modeName);
+        binding.sendCommandButton.setText(modeName);
+    }
+
+
+    public void setDuration(){
+        String durationText = "Duration: ";
+
+        if (duration == 1){
+            duration = 2;
+        } else if (duration == 2){
+            duration = 3;
+        } else if (duration == 3){
+            duration = 4;
+        } else if (duration == 4){
+            duration = 1;
+        } else {
+            Log.e(TAG, "setMode: non 0/1/2 value for mode");
+        }
+        binding.durationButton.setText(durationText + duration);
+    }
+
+    public void doSetDuration(View view){
+        setDuration();
+        Log.d(TAG, "doSetDuration: duration set to " + duration);
+    }
+
+
+    public void doSetMode(View view){
+        setMode();
+        Log.d(TAG, "doSetMode: mode set to mode " + mode + "(" + modeName +")");
+    }
+
     public void doShock(View v){
         Log.d(TAG, "doShock: start hit");
-        apiHandler.doShock(this, intensity, duration);
+        apiHandler.doShock(this, intensity, duration, mode);
     }
 }

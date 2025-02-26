@@ -46,8 +46,8 @@ public class APIHandler {
         }
     }
 
-    public static void doShock(MainActivity mainActivity, int intensity, int duration){
-        String op = "0"; // op values determine which operation the shocker carries out
+    public static void doShock(MainActivity mainActivity, int intensity, int duration, int mode){
+        String op = String.valueOf(mode); // op values determine which operation the shocker carries out
 
         if (queue == null){
             queue = Volley.newRequestQueue(mainActivity);
@@ -59,7 +59,10 @@ public class APIHandler {
             jsonBody.put("Username", username);
             jsonBody.put("Name", name);
             jsonBody.put("Code", code);
-            jsonBody.put("Intensity", intensity);
+            if (mode != 2) {
+                // Add this if shock or vibration mode. Beep has no intensity attribute
+                jsonBody.put("Intensity", intensity);
+            }
             jsonBody.put("Duration", duration);
             jsonBody.put("Apikey", apikey);
             jsonBody.put("Op", op);
@@ -71,6 +74,7 @@ public class APIHandler {
         // Set up listeners for the request response
         Response.Listener<JSONObject> listener = response -> {
             Log.d(TAG, "doShock: got response: " + response);
+
         };
 
         Response.ErrorListener error = error1 -> {
@@ -96,16 +100,6 @@ public class APIHandler {
         Log.d(TAG, "doShock: request formed: " + jsonBody);
 
         queue.add(jsonObjectRequest);
-    }
-
-    public void doVibrate(MainActivity mainActivity){
-        String op = "1";
-
-    }
-
-    public void doBeep(MainActivity mainActivity){
-        String op = "2";
-
     }
 
     public static void getShockerInfo(){
