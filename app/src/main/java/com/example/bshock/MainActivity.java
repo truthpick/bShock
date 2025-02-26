@@ -96,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
         if (debug) {
             setDebugTools();
         }
+        else {
+            binding.debugUsername.setVisibility(View.INVISIBLE);
+            binding.debugAPIKey.setVisibility(View.INVISIBLE);
+            binding.debugSharecode.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void setDebugTools() {

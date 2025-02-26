@@ -86,7 +86,7 @@
         android:layout_marginBottom="8dp"
         android:onClick="doSetDuration"
         android:text="Set Duration"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -101,7 +101,7 @@
         android:inputType="numberDecimal"
         android:textColor="@color/white"
         android:textSize="24sp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/setDurationButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
